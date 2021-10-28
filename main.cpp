@@ -1,21 +1,16 @@
 #include "main.h"
 #include "ImageEvaluation.h"
-//#include "ImageHistgram.h"		// ƒqƒXƒgƒOƒ‰ƒ€æ“¾
 
 
 int main() {
-	/* ‰æ‘œ‚Ì“ü—Í */
+	/* ç”»åƒã®å…¥åŠ› */
 	Input_Image();
 
-	clock_t start, end;	// ˆ—ŠÔ•\¦—p
+	clock_t start, end;	// å‡¦ç†æ™‚é–“è¡¨ç¤ºç”¨
 	start = clock();
-	//--- ‰æ‘œˆ— -------------------------------------------------------------------------------
-	Image_src.copyTo(Image_dst);
-	GaussianBlur(Image_src, Image_dst, Size(5, 5), 0);	// ƒKƒEƒVƒAƒ“ƒtƒBƒ‹ƒ^[
-	checkMat(Image_dst);								// MatŠÖ”‚ÌƒTƒCƒY‚ÆŒ^‚ÌŠm”F
-
-	//DrawHist(Image_src);			// ƒqƒXƒgƒOƒ‰ƒ€æ“¾
-	//DrawHist(Image_src, Image_dst);		// ƒqƒXƒgƒOƒ‰ƒ€æ“¾
+	//--- ç”»åƒå‡¦ç† -------------------------------------------------------------------------------
+	GaussianBlur(Image_src, Image_dst, Size(5, 5), 0);	// ã‚¬ã‚¦ã‚·ã‚¢ãƒ³ãƒ•ã‚£ãƒ«ã‚¿ãƒ¼
+	checkMat(Image_dst);					// Maté–¢æ•°ã®ã‚µã‚¤ã‚ºã¨å‹ã®ç¢ºèª
 	//--------------------------------------------------------------------------------------------
 	end = clock();
 	double time_difference = (double)end - (double)start;
@@ -23,43 +18,43 @@ int main() {
 	cout << "time : " << time << " [ms]" << endl;
 	cout << endl;
 
-	/* ‰æ‘œ‚Ì•]‰¿ */
-	cout << "o—Í‰æ‘œ ‚Æ “ü—Í‰æ‘œ" << endl;				// ÀsŠm”F—p
+	/* ç”»åƒã®è©•ä¾¡ */
+	cout << "å‡ºåŠ›ç”»åƒ ã¨ å…¥åŠ›ç”»åƒ" << endl;			// å®Ÿè¡Œç¢ºèªç”¨
 	Evaluation_MSE_PSNR_SSIM(Image_src, Image_dst);
 
-	/* ‰æ‘œ‚Ìo—Í */
+	/* ç”»åƒã®å‡ºåŠ› */
 	Output_Image();
 
 	return 0;
 }
 
-// ‰æ‘œ‚Ì“ü—Í
+// ç”»åƒã®å…¥åŠ›
 void Input_Image() {
-	string file_src = "src.jpg";	// “ü—Í‰æ‘œ‚Ìƒtƒ@ƒCƒ‹–¼
-	Image_src = imread(file_src, 1);		// “ü—Í‰æ‘œiƒJƒ‰[j‚Ì“Ç‚İ‚İ
-	Image_src_gray = imread(file_src, 0);	// “ü—Í‰æ‘œiƒOƒŒ[ƒXƒP[ƒ‹j‚Ì“Ç‚İ‚İ
+	string file_src = "src.jpg";	// å…¥åŠ›ç”»åƒã®ãƒ•ã‚¡ã‚¤ãƒ«å
+	Image_src = imread(file_src, 1);	// å…¥åŠ›ç”»åƒï¼ˆã‚«ãƒ©ãƒ¼ï¼‰ã®èª­ã¿è¾¼ã¿
+	//Image_src = imread(file_src, 0);	// å…¥åŠ›ç”»åƒï¼ˆã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«ï¼‰ã®èª­ã¿è¾¼ã¿
 
-	/* ƒpƒ‰ƒ[ƒ^’è‹` */
+	/* ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å®šç¾© */
 	WIDTH = Image_src.cols;
 	HEIGHT = Image_src.rows;
 	MAX_DATA = WIDTH * HEIGHT;
 	cout << "INPUT : WIDTH = " << WIDTH << " , HEIGHT = " << HEIGHT << endl;
 	cout << endl;
 
-	Image_dst = Mat(Size(WIDTH, HEIGHT), CV_8UC3);	// o—Í‰æ‘œiƒJƒ‰[j‚Ì‰Šú‰»
+	Image_dst = Mat(Size(WIDTH, HEIGHT), CV_8UC3);	// å‡ºåŠ›ç”»åƒï¼ˆã‚«ãƒ©ãƒ¼ï¼‰ã®åˆæœŸåŒ–
 }
-// ‰æ‘œ‚Ìo—Í
+// ç”»åƒã®å‡ºåŠ›
 void Output_Image() {
-	string file_dst = "dst.jpg";	// o—Í‰æ‘œ‚Ìƒtƒ@ƒCƒ‹–¼
+	string file_dst = "dst.jpg";	// å‡ºåŠ›ç”»åƒã®ãƒ•ã‚¡ã‚¤ãƒ«å
 
-	/* ƒEƒBƒ“ƒhƒE¶¬ */
+	/* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ç”Ÿæˆ */
 	namedWindow(win_src, WINDOW_AUTOSIZE);
 	namedWindow(win_dst, WINDOW_AUTOSIZE);
 
-	/* ‰æ‘œ‚Ì•\¦ & •Û‘¶ */
-	imshow(win_src, Image_src);				// “ü—Í‰æ‘œ‚ğ•\¦
-	imshow(win_dst, Image_dst);				// o—Í‰æ‘œ‚ğ•\¦
-	imwrite(file_dst, Image_dst);			// ˆ—Œ‹‰Ê‚Ì•Û‘¶
+	/* ç”»åƒã®è¡¨ç¤º & ä¿å­˜ */
+	imshow(win_src, Image_src);				// å…¥åŠ›ç”»åƒã‚’è¡¨ç¤º
+	imshow(win_dst, Image_dst);				// å‡ºåŠ›ç”»åƒã‚’è¡¨ç¤º
+	imwrite(file_dst, Image_dst);			// å‡¦ç†çµæœã®ä¿å­˜
 
-	waitKey(0); // ƒL[“ü—Í‘Ò‚¿
+	waitKey(0); // ã‚­ãƒ¼å…¥åŠ›å¾…ã¡
 }
