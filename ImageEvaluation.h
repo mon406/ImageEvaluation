@@ -3,17 +3,17 @@
 
 #include "main.h"
 
-/* ŠÖ”éŒ¾ */
-void checkMat(Mat& checkImg);				// MatŠÖ”‚ÌƒTƒCƒY‚ÆŒ^‚ÌŠm”F
-void checkMat_detail(Mat& checkImg);		// MatŠÖ”‚ÌƒTƒCƒY‚ÆŒ^‚ÌŠm”F(Ú×•\¦)
+/* é–¢æ•°å®£è¨€ */
+void checkMat(Mat& checkImg);			// Maté–¢æ•°ã®ã‚µã‚¤ã‚ºã¨å‹ã®ç¢ºèª
+void checkMat_detail(Mat& checkImg);		// Maté–¢æ•°ã®ã‚µã‚¤ã‚ºã¨å‹ã®ç¢ºèª(è©³ç´°è¡¨ç¤º)
 
-void Evaluation_MSE_PSNR_SSIM(Mat& Original, Mat& Inpaint);	// MSE&PSNR&SSIM‚É‚æ‚é‰æ‘œ•]‰¿
+void Evaluation_MSE_PSNR_SSIM(Mat& Original, Mat& Inpaint);	// MSE&PSNR&SSIMã«ã‚ˆã‚‹ç”»åƒè©•ä¾¡
 void SSIMcalc(double& ssim, Mat& image_1, Mat& image_2);
 
 
-/* ŠÖ” */
+/* é–¢æ•° */
 
-// MatŠÖ”‚ÌŠm”F
+// Maté–¢æ•°ã®ç¢ºèª
 void checkMat(Mat& checkImg) {
 	cout << "##############################" << endl;
 	cout << " cols = " << checkImg.cols << endl;
@@ -32,7 +32,7 @@ void checkMat(Mat& checkImg) {
 	cout << endl;
 }
 
-// MatŠÖ”‚ÌŠm”F(Ú×•\¦)
+// Maté–¢æ•°ã®ç¢ºèª(è©³ç´°è¡¨ç¤º)
 void checkMat_detail(Mat& checkImg) {
 	cout << "##############################" << endl;
 	cout << " cols = " << checkImg.cols << endl;
@@ -51,15 +51,15 @@ void checkMat_detail(Mat& checkImg) {
 }
 
 
-// MSE&PSNR&SSIM‚É‚æ‚é‰æ‘œ•]‰¿
+// MSE&PSNR&SSIMã«ã‚ˆã‚‹ç”»åƒè©•ä¾¡
 void Evaluation_MSE_PSNR_SSIM(Mat& Original, Mat& Inpaint) {
 	double MSE = 0.0, PSNR = 0.0, SSIM = 0.0;
 	Mat beforeIMG, afterIMG;
 	Original.copyTo(beforeIMG);
 	Inpaint.copyTo(afterIMG);
 
-	double MSE_sum = 0.0;	// MSE’l
-	double image_cost;		// ‰æ‘f’l‚Ì·•ª
+	double MSE_sum = 0.0;	// MSEå€¤
+	double image_cost;		// ç”»ç´ å€¤ã®å·®åˆ†
 	int compare_size = 1, color_ind;
 	int occ_pix_count = 0;
 
@@ -67,7 +67,7 @@ void Evaluation_MSE_PSNR_SSIM(Mat& Original, Mat& Inpaint) {
 	else if (Original.channels() != Inpaint.channels()) { cout << "ERROR! MSE_PSNR_SSIM() : Can't calculate because of wrong channels." << endl; }
 	else {
 		if (Original.channels() == 3) {
-			/* MSEŒvZ(RGB) */
+			/* MSEè¨ˆç®—(RGB) */
 			for (int i = 0; i < Original.rows; i++) {
 				for (int j = 0; j < Original.cols; j++) {
 					image_cost = 0.0;
@@ -83,7 +83,7 @@ void Evaluation_MSE_PSNR_SSIM(Mat& Original, Mat& Inpaint) {
 			compare_size = occ_pix_count * 3;
 		}
 		else if (Original.channels() == 1) {
-			/* MSEŒvZ(Grayscale) */
+			/* MSEè¨ˆç®—(Grayscale) */
 			for (int i = 0; i < Original.rows; i++) {
 				for (int j = 0; j < Original.cols; j++) {
 					image_cost = 0.0;
@@ -97,15 +97,15 @@ void Evaluation_MSE_PSNR_SSIM(Mat& Original, Mat& Inpaint) {
 		}
 		MSE = (double)MSE_sum / (double)compare_size;
 
-		/* PSNRŒvZ */
+		/* PSNRè¨ˆç®— */
 		if (MSE == 0) { PSNR = -1; }
 		else { PSNR = 20 * (double)log10(MAX_INTENSE) - 10 * (double)log10(MSE); }
 
-		/* SSIMŒvZ */
+		/* SSIMè¨ˆç®— */
 		SSIMcalc(SSIM, beforeIMG, afterIMG);
 
-		/* •]‰¿Œ‹‰Ê•\¦ */
-		cout << "--- •]‰¿ ------------------------------------------" << endl;
+		/* è©•ä¾¡çµæœè¡¨ç¤º */
+		cout << "--- è©•ä¾¡ ------------------------------------------" << endl;
 		cout << " MSE  : " << MSE << endl;
 		if (PSNR >= 0) { cout << " PSNR : " << PSNR << endl; }
 		else { cout << " PSNR : inf" << endl; }
@@ -115,7 +115,7 @@ void Evaluation_MSE_PSNR_SSIM(Mat& Original, Mat& Inpaint) {
 	cout << endl;
 }
 
-// SSIMZo
+// SSIMç®—å‡º
 void SSIMcalc(double& ssim, Mat& image_1, Mat& image_2) {
 	const double C1 = pow(0.01 * 255, 2), C2 = pow(0.03 * 255, 2);
 
@@ -153,7 +153,7 @@ void SSIMcalc(double& ssim, Mat& image_1, Mat& image_2) {
 	divide(t3, t1, ssim_map);      // ssim_map =  t3./t1;
 	Scalar mssim = mean(ssim_map); // mssim = average of ssim map
 
-	/* SSIM•½‹Ï(RGB or Gray) */
+	/* SSIMå¹³å‡(RGB or Gray) */
 	double SSIM;
 	SSIM = (double)mssim[0] + (double)mssim[1] + (double)mssim[2];
 	if (image_1.channels() == 3) { SSIM = (double)SSIM / 3.0; }
