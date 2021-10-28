@@ -1,35 +1,30 @@
 #pragma once
 
-/* g—pƒfƒBƒŒƒNƒgƒŠw’è‹y‚Ñ’è‹` */
+/* ä½¿ç”¨ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªæŒ‡å®šåŠã³å®šç¾© */
 #define _CRT_SECURE_NO_WARNINGS
 #define _USE_MATH_DEFINES
-#include <iostream>			// •W€“üo—Í
+#include <iostream>			// æ¨™æº–å…¥å‡ºåŠ›
 #include <opencv2/opencv.hpp>
-#include <opencv2/core/core.hpp>			// V‚µ‚¢C++‚Ìƒf[ƒ^\‘¢‚ÆZpƒ‹[ƒ`ƒ“ŒQ
-#include <opencv2/imgproc/imgproc.hpp>		// V‚µ‚¢C++‚Ì‰æ‘œˆ—ŠÖ”ŒQ
-#include <opencv2/highgui/highgui.hpp>		// ‰æ‘œƒf[ƒ^‚ÌƒEƒBƒ“ƒhƒE•\¦
-#include <time.h>			// 
-//#include <cmath>			// ZpŒvZ
-//#include <cstdlib>			// ”’l•ÏŠ·,‹^——”
-//#include <array>			// ”z—ñarrayƒNƒ‰ƒX
-//#include <vector>			// ”z—ñvectorƒNƒ‰ƒX
+#include <opencv2/core/core.hpp>			// æ–°ã—ã„C++ã®ãƒ‡ãƒ¼ã‚¿æ§‹é€ ã¨ç®—è¡“ãƒ«ãƒ¼ãƒãƒ³ç¾¤
+#include <opencv2/imgproc/imgproc.hpp>		// æ–°ã—ã„C++ã®ç”»åƒå‡¦ç†é–¢æ•°ç¾¤
+#include <opencv2/highgui/highgui.hpp>		// ç”»åƒãƒ‡ãƒ¼ã‚¿ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦è¡¨ç¤º
+#include <time.h>			// æ™‚åˆ»
 
 using namespace std;
 using namespace cv;
-string win_src = "src";				// “ü—Í‰æ‘œƒEƒBƒ“ƒhƒE
-string win_dst = "dst";				// o—Í‰æ‘œƒEƒBƒ“ƒhƒE
+string win_src = "src";				// å…¥åŠ›ç”»åƒã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
+string win_dst = "dst";				// å‡ºåŠ›ç”»åƒã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
 
-/* “üo—Í‰æ‘œ */
-Mat Image_src;				// “ü—Í‰æ‘œ
-Mat Image_src_gray;			// “ü—Í‰æ‘œ(ƒOƒŒ[ƒXƒP[ƒ‹)
-Mat Image_dst;				// o—Í‰æ‘œ
+/* å…¥å‡ºåŠ›ç”»åƒ */
+Mat Image_src;				// å…¥åŠ›ç”»åƒ
+Mat Image_dst;				// å‡ºåŠ›ç”»åƒ
 
-/* ’è” */
-int MAX_INTENSE = 255;	// Å‘åF’l
-int WIDTH;				// “ü—Í‰æ‘œ‚Ì‰¡•iƒsƒNƒZƒ‹”j
-int HEIGHT;				// “ü—Í‰æ‘œ‚Ìc•iƒsƒNƒZƒ‹”j
-int MAX_DATA;			// “ü—Í‰æ‘œ‚Ì‘ƒsƒNƒZƒ‹”
+/* å®šæ•° */
+int MAX_INTENSE = 255;	// æœ€å¤§è‰²å€¤
+int WIDTH;				// å…¥åŠ›ç”»åƒã®æ¨ªå¹…ï¼ˆãƒ”ã‚¯ã‚»ãƒ«æ•°ï¼‰
+int HEIGHT;				// å…¥åŠ›ç”»åƒã®ç¸¦å¹…ï¼ˆãƒ”ã‚¯ã‚»ãƒ«æ•°ï¼‰
+int MAX_DATA;			// å…¥åŠ›ç”»åƒã®ç·ãƒ”ã‚¯ã‚»ãƒ«æ•°
 
-/* “üo—ÍŠÖ” */
-void Input_Image();			// ‰æ‘œ‚Ì“ü—Í
-void Output_Image();		// ‰æ‘œ‚Ìo—Í
+/* å…¥å‡ºåŠ›é–¢æ•° */
+void Input_Image();			// ç”»åƒã®å…¥åŠ›
+void Output_Image();		// ç”»åƒã®å‡ºåŠ›
